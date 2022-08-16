@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:netflix/presentaion/main_page/screen_main.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,17 +18,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
+        buttonTheme: const ButtonThemeData(
+          colorScheme: ColorScheme.light(),
+        ),
+        fontFamily: GoogleFonts.montserrat().fontFamily,
         scaffoldBackgroundColor: Colors.black,
-        primarySwatch: Colors.red,
         textTheme: const TextTheme(
-            bodyText1: TextStyle(
-              color: Colors.white,
-            ),
-            bodyText2: TextStyle(
-              color: Colors.white,
-            )),
+          bodyText1: TextStyle(
+            color: Colors.white,
+          ),
+          bodyText2: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        primaryIconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      home: const MainPageScreen(),
+      home: MainPageScreen(),
     );
   }
 }

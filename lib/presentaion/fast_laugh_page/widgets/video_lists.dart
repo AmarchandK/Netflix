@@ -46,7 +46,7 @@ class VideoItems extends StatelessWidget {
                     VideoActions(
                         icn: Icons.emoji_emotions_outlined, title: 'LOL'),
                     VideoActions(icn: Icons.add_outlined, title: 'My List'),
-                    VideoActions(icn: Icons.share, title: 'Share'),
+                    VideoActions(icn: Icons.near_me_sharp, title: 'Share'),
                     VideoActions(
                         icn: CupertinoIcons.play_circle, title: 'Play'),
                   ],

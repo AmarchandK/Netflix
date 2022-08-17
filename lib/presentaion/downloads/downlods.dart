@@ -1,14 +1,17 @@
 // ignore_for_file: camel_case_types
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/core/const.dart';
+import 'package:netflix/core/const_strings.dart';
 import 'package:netflix/presentaion/widget_refactories/app_bar_widget.dart';
 
 class DownloadScreen extends StatelessWidget {
   DownloadScreen({Key? key}) : super(key: key);
   final _widgetList = [
     const _smartDownloads(),
-    _Section2(),
+    const _Section2(),
     const _Section3(),
   ];
   @override
@@ -32,14 +35,20 @@ class DownloadScreen extends StatelessWidget {
 }
 
 class _Section2 extends StatelessWidget {
-  _Section2({Key? key}) : super(key: key);
-  final List stackImage = [
-    'assets/download/breakingbad.jpg',
-    'assets/download/Got.jpg',
-    'assets/download/purplehurts.jpg'
-  ];
+ const _Section2({Key? key}) : super(key: key); 
+  // final List stackImage = [
+  //   'assets/download/breakingbad.jpg',
+  //   'assets/download/Got.jpg',
+  //   'assets/download/purplehurts.jpg'
+  // ];
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+    WidgetsBinding.instance.addPostFrameCallback((_ ) {
+ BlocProvider.of<DownloadsBloc>(context)
+    .add(const DownloadsEvent.getDownloadsImage());
+    });
+    // BlocProvider.of<DownloadsBloc>(context)
+    //     .add(const DownloadsEvent.getDownloadsImage()); `  11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -56,39 +65,52 @@ class _Section2 extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.grey, fontSize: 16),
         ),
-        SizedBox(
-          height: height / 1.9,
-          width: width,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey.withOpacity(0.5),
-                radius: height * 0.2,
-              ),
-              DownloadImgeWidget(
-                margin: const EdgeInsets.only(left: 170, bottom: 50),
-                height: height * 0.3,
-                width: width * 0.4,
-                stackImage: stackImage[2],
-                angle: 20,
-              ),
-              DownloadImgeWidget(
-                margin: const EdgeInsets.only(right: 170, bottom: 50),
-                height: height * 0.3,
-                width: width * 0.4,
-                stackImage: stackImage[1],
-                angle: -20,
-              ),
-              DownloadImgeWidget(
-                margin: const EdgeInsets.only(top: 30, bottom: 40),
-                height: height * 0.35,
-                width: width * 0.45,
-                stackImage: stackImage[0],
-                angle: 0,
-              ),
-            ],
-          ),
+        BlocBuilder<DownloadsBloc, DownloadsState>(
+          builder: (context, state) {
+            return SizedBox(
+              height: height / 1.9,
+              width: width,
+              child: state.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
+                    )
+                  : Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.grey.withOpacity(0.5),
+                          radius: height * 0.2,
+                        ),
+                        DownloadImgeWidget(
+                          margin: const EdgeInsets.only(left: 170, bottom: 50),
+                          height: height * 0.3,
+                          width: width * 0.4,
+                          stackImage:
+                              '$imageAppendURL${state.downloads[0].posterPath}',
+                          angle: 20,
+                        ),
+                        DownloadImgeWidget(
+                          margin: const EdgeInsets.only(right: 170, bottom: 50),
+                          height: height * 0.3,
+                          width: width * 0.4,
+                          stackImage:
+                              '$imageAppendURL${state.downloads[1].posterPath}',
+                          angle: -20,
+                        ),
+                        DownloadImgeWidget(
+                          margin: const EdgeInsets.only(top: 30, bottom: 40),
+                          height: height * 0.35,
+                          width: width * 0.45,
+                          stackImage:
+                              '$imageAppendURL${state.downloads[2].posterPath}',
+                          angle: 0,
+                        ),
+                      ],
+                    ),
+            );
+          },
         ),
       ],
     );
@@ -187,7 +209,7 @@ class DownloadImgeWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             fit: BoxFit.fill,
-            image: AssetImage(stackImage),
+            image: NetworkImage(stackImage),
           ),
         ),
       ),

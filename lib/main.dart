@@ -5,8 +5,10 @@ import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/core/dipendency_injection/injectable.dart';
 import 'package:netflix/presentaion/main_page/screen_main.dart';
 
+import 'application/search/search_bloc.dart';
+
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();  
+  WidgetsFlutterBinding.ensureInitialized();
   await configureInjection();
   runApp(
     const MyApp(),
@@ -20,8 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-   
-      providers: [ BlocProvider(create: ((ctx) =>getIt<DownloadsBloc>() ))],
+      providers: [
+        BlocProvider(create: ((ctx) => getIt<DownloadsBloc>())),
+        BlocProvider(create: ((ctx) => getIt<SearchBloc>()))
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

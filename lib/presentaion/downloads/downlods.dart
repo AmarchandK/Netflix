@@ -35,20 +35,20 @@ class DownloadScreen extends StatelessWidget {
 }
 
 class _Section2 extends StatelessWidget {
- const _Section2({Key? key}) : super(key: key); 
+  const _Section2({Key? key}) : super(key: key);
   // final List stackImage = [
   //   'assets/download/breakingbad.jpg',
   //   'assets/download/Got.jpg',
   //   'assets/download/purplehurts.jpg'
   // ];
   @override
-  Widget build(BuildContext context) { 
-    WidgetsBinding.instance.addPostFrameCallback((_ ) {
- BlocProvider.of<DownloadsBloc>(context)
-    .add(const DownloadsEvent.getDownloadsImage());
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<DownloadsBloc>(context)
+          .add(const DownloadsEvent.getDownloadsImage());
     });
     // BlocProvider.of<DownloadsBloc>(context)
-    //     .add(const DownloadsEvent.getDownloadsImage()); `  11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    //     .add(const DownloadsEvent.getDownloadsImage()); `  11
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 

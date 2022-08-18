@@ -12,7 +12,7 @@ class AppBarWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style:const TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
           ),
           Row(
             children: [

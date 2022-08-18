@@ -1,4 +1,6 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers,
+
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -23,8 +25,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     /*idle event*/
     on<Initialize>((event, emit) async {
       if (state.idleList.isNotEmpty) {
-          emit( SearchState(
-          searchResultList: [], idleList: state.idleList, isloading: false, isError: false));
+        emit(SearchState(
+            searchResultList: [],
+            idleList: state.idleList,
+            isloading: false,
+            isError: false));
         return;
       }
       emit(const SearchState(
@@ -47,9 +52,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       emit(_state);
     });
     /*searchResultEvent*/
-    on<SearchMovie>((event, emit) {
+    on<SearchMovie>((event, emit) async {
       // call search movie UI
-      _searchService.searchMovies(movieQuery: event.movieQuery);
+      log('Searching for ${event.movieQuery}');
+
+      emit(const SearchState(
+          searchResultList: [], idleList: [], isloading: true, isError: false));
+      final _result = _searchService.searchMovies(movieQuery: event.movieQuery);
+      log('logs ${_result.toString()}');
     });
   }
 }

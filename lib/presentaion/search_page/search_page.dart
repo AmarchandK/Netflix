@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class SearchScreen extends StatelessWidget {
               onChanged: (value) {
              BlocProvider.of<SearchBloc>(context)
                     .add(SearchMovie(movieQuery: value));
-              
+             
               },
               style: const TextStyle(color: Colors.white),
               backgroundColor: Colors.grey.withOpacity(0.4),

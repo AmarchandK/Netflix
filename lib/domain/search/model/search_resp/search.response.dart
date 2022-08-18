@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:netflix/core/const_strings.dart';
 part 'search.response.g.dart';
 
 @JsonSerializable()

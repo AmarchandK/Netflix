@@ -5,6 +5,7 @@ import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/core/dipendency_injection/injectable.dart';
 import 'package:netflix/presentaion/main_page/screen_main.dart';
 
+import 'application/fast_laugh/fast_laugh_bloc.dart';
 import 'application/search/search_bloc.dart';
 
 Future<void> main() async {
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: ((ctx) => getIt<DownloadsBloc>())),
-        BlocProvider(create: ((ctx) => getIt<SearchBloc>()))
+        BlocProvider(create: ((ctx) => getIt<SearchBloc>())),
+        BlocProvider(create: ((ctx) => getIt<FastLaughBloc>())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

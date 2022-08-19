@@ -75,6 +75,7 @@ class TopSearchItemTile extends StatelessWidget {
                 image: NetworkImage(imageUrl), fit: BoxFit.cover),
           ),
         ),
+        widthGaps,
         Expanded(
           child: Text(
             title,

@@ -1,13 +1,14 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix/application/search/search_bloc.dart';
+import 'package:netflix/core/debounce.dart';
 import 'package:netflix/presentaion/search_page/widgets/search_idle.dart';
+import 'package:netflix/presentaion/search_page/widgets/search_result.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({Key? key}) : super(key: key);
-
+  SearchScreen({Key? key}) : super(key: key);
+  final Debouncer _debouncer = Debouncer(milliseconds: 1 * 1000);
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -22,9 +23,13 @@ class SearchScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CupertinoSearchTextField(
               onChanged: (value) {
-             BlocProvider.of<SearchBloc>(context)
-                    .add(SearchMovie(movieQuery: value));
-             
+                if (value.isEmpty) {
+                  return ;
+                }
+                _debouncer.run(() {
+                  BlocProvider.of<SearchBloc>(context)
+                      .add(SearchMovie(movieQuery: value));
+                });
               },
               style: const TextStyle(color: Colors.white),
               backgroundColor: Colors.grey.withOpacity(0.4),
@@ -38,9 +43,15 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             // child: SearchIdleWidget(),
-            child: SearchIdleWidget(),
+            child: BlocBuilder<SearchBloc, SearchState>(
+              builder: (context, state) {
+                return (state.searchResultList.isEmpty)
+                    ? const SearchIdleWidget()
+                    : const SearchResultWidget();
+              },
+            ),
           ),
         ],
       ),

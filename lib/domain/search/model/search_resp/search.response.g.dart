@@ -6,24 +6,24 @@ part of 'search.response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Search _$SearchFromJson(Map<String, dynamic> json) => Search(
+SearchResp _$SearchRespFromJson(Map<String, dynamic> json) => SearchResp(
       results: (json['results'] as List<dynamic>?)
-              ?.map((e) => SearchResp.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => SearchResult.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
 
-Map<String, dynamic> _$SearchToJson(Search instance) => <String, dynamic>{
+Map<String, dynamic> _$SearchRespToJson(SearchResp instance) =>
+    <String, dynamic>{
       'results': instance.results,
     };
 
-SearchResp _$SearchRespFromJson(Map<String, dynamic> json) => SearchResp(
-      id: json['id'] as int?,
+SearchResult _$SearchResultFromJson(Map<String, dynamic> json) => SearchResult(
       originalTitle: json['original_title'] as String?,
       posterPath: json['poster_path'] as String?,
-    );
+    )..id = json['id'] as int?;
 
-Map<String, dynamic> _$SearchRespToJson(SearchResp instance) =>
+Map<String, dynamic> _$SearchResultToJson(SearchResult instance) =>
     <String, dynamic>{
       'id': instance.id,
       'original_title': instance.originalTitle,

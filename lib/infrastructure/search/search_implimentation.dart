@@ -8,7 +8,8 @@ import 'package:dartz/dartz.dart';
 import 'package:netflix/domain/search/model/search_service_repo.dart';
 
 import '../../domain/api_end_points.dart';
-@LazySingleton(as: SearchService )
+
+@LazySingleton(as: SearchService)
 class SearchImpl implements SearchService {
   @override
   Future<Either<MainFailure, SearchResp>> searchMovies(
@@ -23,6 +24,9 @@ class SearchImpl implements SearchService {
       } else {
         return const Left(MainFailure.serverFailure());
       }
+    }on DioError catch (e) {
+      log(e.toString());
+      return const Left(MainFailure.clientFailure());
     } catch (e) {
       log(e.toString());
       return const Left(MainFailure.clientFailure());

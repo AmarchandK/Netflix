@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +9,7 @@ import 'package:netflix/presentaion/main_page/screen_main.dart';
 
 import 'application/fast_laugh/fast_laugh_bloc.dart';
 import 'application/search/search_bloc.dart';
+import 'core/const.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +17,7 @@ Future<void> main() async {
   runApp(
     const MyApp(),
   );
+  HttpOverrides.global = MyHttpOverrides();
 }
 
 class MyApp extends StatelessWidget {

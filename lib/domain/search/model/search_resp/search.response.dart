@@ -1,22 +1,23 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:netflix/core/const_strings.dart';
 part 'search.response.g.dart';
 
 @JsonSerializable()
-class Search {
+class SearchResp {
   @JsonKey(name: 'results')
-  List<SearchResp> results;
+  List<SearchResult> results;
 
-  Search({this.results = const []});
+  SearchResp({this.results = const []});
 
-  factory Search.fromJson(Map<String, dynamic> json) {
-    return _$SearchFromJson(json);
+  factory SearchResp.fromJson(Map<String, dynamic> json) {
+    return _$SearchRespFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$SearchToJson(this);
+  Map<String, dynamic> toJson() => _$SearchRespToJson(this);
 }
 
 @JsonSerializable()
-class SearchResp {
+class SearchResult {
   @JsonKey(name: 'id')
   int? id;
   @JsonKey(name: 'original_title')
@@ -24,15 +25,16 @@ class SearchResp {
 
   @JsonKey(name: 'poster_path')
   String? posterPath;
-  SearchResp({
-    this.id,
+  String get posterImageUrl => '$imageAppendURL$posterPath';
+  SearchResult({
+    // this.id,
     this.originalTitle,
     this.posterPath,
   });
 
-  factory SearchResp.fromJson(Map<String, dynamic> json) {
-    return _$SearchRespFromJson(json);
+  factory SearchResult.fromJson(Map<String, dynamic> json) {
+    return _$SearchResultFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$SearchRespToJson(this);
+  Map<String, dynamic> toJson() => _$SearchResultToJson(this);
 }

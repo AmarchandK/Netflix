@@ -312,7 +312,7 @@ abstract class SearchMovie implements SearchEvent {
 
 /// @nodoc
 mixin _$SearchState {
-  List<SearchResp> get searchResultList => throw _privateConstructorUsedError;
+  List<SearchResult> get searchResultList => throw _privateConstructorUsedError;
   List<Downloads> get idleList => throw _privateConstructorUsedError;
   bool get isloading => throw _privateConstructorUsedError;
   bool get isError => throw _privateConstructorUsedError;
@@ -328,7 +328,7 @@ abstract class $SearchStateCopyWith<$Res> {
           SearchState value, $Res Function(SearchState) then) =
       _$SearchStateCopyWithImpl<$Res>;
   $Res call(
-      {List<SearchResp> searchResultList,
+      {List<SearchResult> searchResultList,
       List<Downloads> idleList,
       bool isloading,
       bool isError});
@@ -353,7 +353,7 @@ class _$SearchStateCopyWithImpl<$Res> implements $SearchStateCopyWith<$Res> {
       searchResultList: searchResultList == freezed
           ? _value.searchResultList
           : searchResultList // ignore: cast_nullable_to_non_nullable
-              as List<SearchResp>,
+              as List<SearchResult>,
       idleList: idleList == freezed
           ? _value.idleList
           : idleList // ignore: cast_nullable_to_non_nullable
@@ -378,7 +378,7 @@ abstract class _$$_SearchStateCopyWith<$Res>
       __$$_SearchStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<SearchResp> searchResultList,
+      {List<SearchResult> searchResultList,
       List<Downloads> idleList,
       bool isloading,
       bool isError});
@@ -405,7 +405,7 @@ class __$$_SearchStateCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
       searchResultList: searchResultList == freezed
           ? _value._searchResultList
           : searchResultList // ignore: cast_nullable_to_non_nullable
-              as List<SearchResp>,
+              as List<SearchResult>,
       idleList: idleList == freezed
           ? _value._idleList
           : idleList // ignore: cast_nullable_to_non_nullable
@@ -426,16 +426,16 @@ class __$$_SearchStateCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
 
 class _$_SearchState implements _SearchState {
   const _$_SearchState(
-      {required final List<SearchResp> searchResultList,
+      {required final List<SearchResult> searchResultList,
       required final List<Downloads> idleList,
       required this.isloading,
       required this.isError})
       : _searchResultList = searchResultList,
         _idleList = idleList;
 
-  final List<SearchResp> _searchResultList;
+  final List<SearchResult> _searchResultList;
   @override
-  List<SearchResp> get searchResultList {
+  List<SearchResult> get searchResultList {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_searchResultList);
   }
@@ -485,13 +485,13 @@ class _$_SearchState implements _SearchState {
 
 abstract class _SearchState implements SearchState {
   const factory _SearchState(
-      {required final List<SearchResp> searchResultList,
+      {required final List<SearchResult> searchResultList,
       required final List<Downloads> idleList,
       required final bool isloading,
       required final bool isError}) = _$_SearchState;
 
   @override
-  List<SearchResp> get searchResultList;
+  List<SearchResult> get searchResultList;
   @override
   List<Downloads> get idleList;
   @override

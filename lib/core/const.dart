@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 const bgColor = Colors.black;
@@ -11,3 +13,14 @@ const colorGrey = Colors.grey;
 const colorTransparent = Color.fromARGB(106, 0, 0, 0);
 const TextStyle fontstyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14);
+
+
+
+    /////error handler from stack overflow/// also in main
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}

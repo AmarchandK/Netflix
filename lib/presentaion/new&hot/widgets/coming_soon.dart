@@ -5,19 +5,22 @@ import 'package:netflix/core/const.dart';
 import 'package:netflix/presentaion/home_page/widgets/baground_card.dart';
 import 'package:netflix/presentaion/new&hot/widgets/video_widget.dart';
 
-textSyle({required title}) {
-  return Text(
-    title,
-    style: const TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-      color: colorGrey,
-    ),
-  );
-}
-
 class ComingSoonWidget extends StatelessWidget {
-  const ComingSoonWidget({Key? key}) : super(key: key);
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String description;
+  const ComingSoonWidget(
+      {Key? key,
+      required this.id,
+      required this.month,
+      required this.day,
+      required this.posterPath,
+      required this.movieName,
+      required this.description})
+      : super(key: key);
 
   // @override
   @override
@@ -31,17 +34,17 @@ class ComingSoonWidget extends StatelessWidget {
           width: 50,
           height: _height / 1.7,
           child: Column(
-            children: const [
+            children: [
               Text(
-                "Feb 7",
-                style: TextStyle(
+                month,
+                style: const TextStyle(
                     color: colorGrey,
                     fontWeight: FontWeight.bold,
                     fontSize: 15),
               ),
               Text(
-                '11',
-                style: TextStyle(
+                day,
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 5),
@@ -53,9 +56,10 @@ class ComingSoonWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: _height / 4.5,
               child: VideoWidget(
+                imageaurl: posterPath,
                 width: _width - 50,
+                height: _height,
               ),
             ),
             SizedBox(
@@ -64,39 +68,43 @@ class ComingSoonWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Tall Girl 2',
-                    style: TextStyle(
-                        fontSize: 40,
-                        fontFamily: 'sans',
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: -2),
+                  Expanded(
+                    child: Text(
+                      movieName,
+                      style: const TextStyle(
+                          fontSize: 30,
+                          overflow: TextOverflow.fade,
+                          fontFamily: 'sans',
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -2),
+                    ),
                   ),
-                  Row(
-                    children: const [
-                      CustomButtonWidget(
-                          icn: Icons.notifications, name: 'Notify me'),
-                      widthGaps,
-                      CustomButtonWidget(
-                          icn: Icons.info_outline_rounded, name: 'Info'),
-                    ],
-                  ),
+                  const CustomButtonWidget(
+                      icn: Icons.notifications, name: 'Notify me'),
+                  widthGaps,
+                  const CustomButtonWidget(
+                      icn: Icons.info_outline_rounded, name: 'Info'),
                 ],
               ),
             ),
             heightGap,
-            textSyle(title: 'Coming On Friday'),
+            textSyle(title: 'Coming On $month-j$day'),
             heightGap,
-            const Text(
-              'Tall Girl 2',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            SizedBox(
+              width: _width - 50,
+              child: Text(
+                movieName,
+                style: const TextStyle(
+                    overflow: TextOverflow.clip,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             heightGap,
             SizedBox(
               width: _width - 50,
               child: textSyle(
-                title:
-                    'Landing the lead in the school Musical is a dream come for jodi,untill the pressure sends her confidence - and her relationship- into an tailspin',
+                title: description,
               ),
             )
           ],
@@ -104,4 +112,18 @@ class ComingSoonWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+textSyle({required title}) {
+  return Text(
+    title,
+    softWrap: true,
+    maxLines: 4,
+    style: const TextStyle(
+      overflow: TextOverflow.clip,
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+      color: colorGrey,
+    ),
+  );
 }

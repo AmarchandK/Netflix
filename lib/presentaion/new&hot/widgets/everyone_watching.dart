@@ -7,31 +7,38 @@ import 'package:netflix/presentaion/new&hot/widgets/coming_soon.dart';
 import 'package:netflix/presentaion/new&hot/widgets/video_widget.dart';
 
 class EveryoneWatching extends StatelessWidget {
-  const EveryoneWatching({Key? key}) : super(key: key);
+  final String posterPath;
+  final String movieName;
+  final String description;
+  const EveryoneWatching(
+      {Key? key,
+      required this.posterPath,
+      required this.movieName,
+      required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
+    final _height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Friends',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+          Text(
+            movieName,
+            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
           ),
           heightGap,
-          SizedBox(
-              width: _width - 50,
-              child: textSyle(
-                  title:
-                      'This hit sitcom follows the merry misadventures of six 20-somethingpals as they navigate the pitfalls of work, life and love in 1990s Manhattan')),
+          SizedBox(width: _width - 50, child: textSyle(title: description)),
           const SizedBox(
             height: 40,
           ),
           VideoWidget(
+            imageaurl: posterPath,
             width: _width,
+            height: _height,
           ),
           heightGap,
           Row(

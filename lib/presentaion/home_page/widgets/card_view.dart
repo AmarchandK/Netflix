@@ -2,13 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:netflix/core/const.dart';
+import 'package:netflix/core/const_strings.dart';
+import 'package:netflix/domain/home/model/home_repo.dart';
 import 'package:netflix/presentaion/widget_refactories/title.dart';
 
 class MainCardsHome extends StatelessWidget {
   final String title;
+  final List<HomeData> data;
   const MainCardsHome({
     required this.title,
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -23,8 +27,13 @@ class MainCardsHome extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: List.generate(
-              10,
-              (index) => const HomeCard(),
+              data.length,
+              (index) {
+                final newData = data[index];
+                return HomeCard(
+                  data: newData,
+                );
+              },
             ),
           ),
         )
@@ -34,8 +43,10 @@ class MainCardsHome extends StatelessWidget {
 }
 
 class HomeCard extends StatelessWidget {
+  final HomeData data;
   const HomeCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -49,9 +60,9 @@ class HomeCard extends StatelessWidget {
         width: _width / 2,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          image: const DecorationImage(
+          image: DecorationImage(
             fit: BoxFit.fill,
-            image: AssetImage('assets/download/breakingbad.jpg'),
+            image: NetworkImage('$imageAppendURL${data.posterPath}'),
           ),
         ),
       ),

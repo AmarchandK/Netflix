@@ -36,19 +36,14 @@ class DownloadScreen extends StatelessWidget {
 
 class _Section2 extends StatelessWidget {
   const _Section2({Key? key}) : super(key: key);
-  // final List stackImage = [
-  //   'assets/download/breakingbad.jpg',
-  //   'assets/download/Got.jpg',
-  //   'assets/download/purplehurts.jpg'
-  // ];
+ 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<DownloadsBloc>(context)
           .add(const DownloadsEvent.getDownloadsImage());
     });
-    // BlocProvider.of<DownloadsBloc>(context)
-    //     .add(const DownloadsEvent.getDownloadsImage()); `  11
+
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -71,11 +66,7 @@ class _Section2 extends StatelessWidget {
               height: height / 1.9,
               width: width,
               child: state.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.red,
-                      ),
-                    )
+                  ? const Center(child: spinkit)
                   : Stack(
                       alignment: Alignment.center,
                       children: [

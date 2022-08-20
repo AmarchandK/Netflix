@@ -35,11 +35,13 @@ class SearchIdleWidget extends StatelessWidget {
                   child: Text('List is empty'),
                 );
               }
+              // log(state.toString());
+
               return ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     final movieDetail = state.idleList[index];
-                    log(movieDetail.toString());
+                  
                     return TopSearchItemTile(
                       imageUrl: '$imageAppendURL${movieDetail.posterPath}',
                       title: movieDetail.title ?? 'No Name',

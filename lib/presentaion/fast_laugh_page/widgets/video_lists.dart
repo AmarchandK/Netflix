@@ -1,16 +1,11 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_types_as_parameter_names
-
-import 'dart:developer';
+// ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_types_as_parameter_names, invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix/application/fast_laugh/fast_laugh_bloc.dart';
 import 'package:netflix/core/const.dart';
 import 'package:netflix/core/const_strings.dart';
 import 'package:netflix/domain/downloads/models/downloads.dart';
-import 'package:netflix/presentaion/home_page/widgets/card_view.dart';
-import 'package:netflix/presentaion/search_page/widgets/search_result.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 
@@ -96,7 +91,6 @@ class VideoItems extends StatelessWidget {
                         }
                         return GestureDetector(
                           onTap: () {
-                          
                             likedvideosNotifier.value.add(_index);
                             likedvideosNotifier.notifyListeners();
                           },
@@ -190,11 +184,7 @@ class _FastLaughVideoPlayerState extends State<FastLaughVideoPlayer> {
               aspectRatio: _videoPlayerController.value.aspectRatio,
               child: VideoPlayer(_videoPlayerController),
             )
-          : const Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              ),
-            ),
+          : const Center(child: spinkit),
     );
   }
 

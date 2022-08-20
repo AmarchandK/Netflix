@@ -14,9 +14,6 @@ class NewAndHotScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<HotandnewBloc>(context).add(const LoadDataIncomingSoon());
-    });
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -52,56 +49,105 @@ class NewAndHotScreen extends StatelessWidget {
             tabs: const [Text('🍿Coming Soon'), Text('👀Everyones Watching')],
           ),
         ),
-        body: TabBarView(
-          children: [
-            BlocBuilder<HotandnewBloc, HotandnewState>(
-              builder: (context, state) {
-                if (state.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state.hasError) {
-                  return const Center(child: Text('Error getting data'));
-                } else if (state.comingSoonList.isEmpty) {
-                  return const Center(child: Text('Comingsoon List Empty'));
-                } else {
-                  return ListView.builder(
-                    itemCount: state.comingSoonList.length,
-                    itemBuilder: (BuildContext context, index) {
-                      final movie = state.comingSoonList[index];
-                      final _date = DateTime.parse(movie.releaseDate!);
-                      final _formatedDate =
-                          DateFormat.yMMMMd('en_US').format(_date);
-                      if (movie.id == null) {
-                        return const SizedBox();
-                      }
-                      return ComingSoonWidget(
-                        day: movie.releaseDate!.split('-')[1],
-                        movieName: movie.originalTitle ?? 'No Tittle',
-                        description:
-                            movie.overview ?? 'Discription not available',
-                        month: _formatedDate
-                            .split(' ')
-                            .first
-                            .substring(0, 3)
-                            .toUpperCase(),
-                        id: movie.id.toString(),
-                        posterPath: '$imageAppendURL${movie.posterPath}',
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-            ListView.builder(
-              itemCount: 10,
-              itemBuilder: (BuildContext context, index) =>
-                  const EveryoneWatching(
-                movieName: '',
-                description: '',
-                posterPath: '',
-              ),
-            )
-          ],
+        body: const TabBarView(
+          children: [ComingWidget(), EveryOneWidget()],
         ),
+      ),
+    );
+  }
+}
+
+class ComingWidget extends StatelessWidget {
+  const ComingWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<HotandnewBloc>(context).add(const LoadDataIncomingSoon());
+    });
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<HotandnewBloc>(context)
+            .add(const LoadDataIncomingSoon());
+      },
+      child: BlocBuilder<HotandnewBloc, HotandnewState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state.hasError) {
+            return const Center(child: Text('Error getting data'));
+          } else if (state.comingSoonList.isEmpty) {
+            return const Center(child: Text('Comingsoon List Empty'));
+          } else {
+            return ListView.builder(
+              itemCount: state.comingSoonList.length,
+              itemBuilder: (BuildContext context, index) {
+                final movie = state.comingSoonList[index];
+                final _date = DateTime.parse(movie.releaseDate!);
+                final _formatedDate = DateFormat.yMMMMd('en_US').format(_date);
+                if (movie.id == null) {
+                  return const SizedBox();
+                }
+                return ComingSoonWidget(
+                  day: movie.releaseDate!.split('-')[1],
+                  movieName: movie.originalTitle ?? 'No Tittle',
+                  description: movie.overview ?? 'Discription not available',
+                  month: _formatedDate
+                      .split(' ')
+                      .first
+                      .substring(0, 3)
+                      .toUpperCase(),
+                  id: movie.id.toString(),
+                  posterPath: '$imageAppendURL${movie.posterPath}',
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class EveryOneWidget extends StatelessWidget {
+  const EveryOneWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<HotandnewBloc>(context)
+          .add(const LoadDataInEveryOneisWatching());
+    });
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<HotandnewBloc>(context)
+            .add(const LoadDataInEveryOneisWatching());
+      },
+      child: BlocBuilder<HotandnewBloc, HotandnewState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(child: spinkit);
+          } else if (state.hasError) {
+            return const Center(child: Text('Error getting data'));
+          } else if (state.everyOneIsWatchingList.isEmpty) {
+            return const Center(child: Text('Comingsoon List Empty'));
+          } else {
+            return ListView.builder(
+              itemCount: state.everyOneIsWatchingList.length,
+              itemBuilder: (BuildContext context, index) {
+                final tv = state.everyOneIsWatchingList[index];
+                if (tv.id == null) {
+                  return const SizedBox();
+                }
+                return EveryoneWatching(
+                  movieName: tv.originalName ?? 'No Tittle',
+                  description: tv.overview ?? 'Discription not available',
+                  posterPath: '$imageAppendURL${tv.posterPath}',
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

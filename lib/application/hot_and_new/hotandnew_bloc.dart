@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, no_leading_underscores_for_local_identifiers
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -56,6 +56,37 @@ class HotandnewBloc extends Bloc<HotandnewEvent, HotandnewState> {
     get hot and new tv data
      */
 
-    on<LoadDataInEveryOneisWatching>((event, emit) {});
+    on<LoadDataInEveryOneisWatching>((event, emit)async {   //send loading to ui
+      emit(const HotandnewState(
+        comingSoonList: [],
+        everyOneIsWatchingList: [],
+        isLoading: true,
+        hasError: false,
+      ));
+
+      //get data from remote
+
+      final _result = await _hotAndNewService.getHotAndNewTvData();
+
+      //data to state
+         final newState= _result.fold(
+        (MainFailure failure) {
+          return const HotandnewState(
+            comingSoonList: [],
+            everyOneIsWatchingList: [],
+            isLoading: false,
+            hasError: true,
+          );
+        },
+        (HotAndNewRep resp) {
+          return  HotandnewState(
+            comingSoonList:state.comingSoonList ,
+            everyOneIsWatchingList:resp.results ,
+            isLoading: false,
+            hasError: false,
+          );
+        },
+      );
+      emit(newState);});
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix/application/fast_laugh/fast_laugh_bloc.dart';
 import 'package:netflix/presentaion/fast_laugh_page/widgets/video_lists.dart';
 
+import '../../core/const.dart';
+
 class FastLaughScreen extends StatelessWidget {
   const FastLaughScreen({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class FastLaughScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: spinkit,
             );
           } else if (state.isError) {
             return const Center(child: Text('Something went wrong!!!'));

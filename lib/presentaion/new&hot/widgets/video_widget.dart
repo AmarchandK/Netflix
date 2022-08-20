@@ -6,9 +6,9 @@ class VideoWidget extends StatelessWidget {
   const VideoWidget({
     Key? key,
     required double width,
-    required this.imageaurl, required this.height,
+    required this.imageaurl,
+    required this.height,
   })  : _width = width,
-
         super(key: key);
 
   final double _width;
@@ -22,6 +22,8 @@ class VideoWidget extends StatelessWidget {
           imageaurl,
           fit: BoxFit.contain,
           width: _width,
+          errorBuilder: (context, error, stackTrace) =>
+              const Center(child: Icon(Icons.wifi_off_sharp)),
         ),
         const Positioned(
           bottom: 10,

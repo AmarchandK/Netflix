@@ -7,4 +7,4 @@ class ApiEndPoints {
   static const hotAndNewMovie='$baseURL/discover/movie?api_key=$apiKey';
   static const hotAndNewTv='$baseURL/discover/tv?api_key=$apiKey';
 }
- 
+  

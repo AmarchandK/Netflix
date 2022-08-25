@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-
 import 'package:netflix/core/failiures/mainfailurs.dart';
 import 'package:dartz/dartz.dart';
 import 'package:netflix/domain/api_end_points.dart';

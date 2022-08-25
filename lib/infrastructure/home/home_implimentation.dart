@@ -14,6 +14,7 @@ class HomeImpli {
         final result = (response.data['results'] as List).map((e) {
           return HomeData.fromJson(e);
         }).toList();
+         
         latestMovieNotifier.value.clear();
         latestMovieNotifier.value.addAll(result);
         latestMovieNotifier.notifyListeners();
